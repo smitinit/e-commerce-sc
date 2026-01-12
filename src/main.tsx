@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
 
 import AppRoot from "./components/AppRoot.tsx";
-import App from "./App.tsx";
+import Feed from "./Feed.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 import { Login } from "./components/Login.tsx";
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/",
-            element: <App />,
+            element: <Feed />,
             children: [
               {
                 path: "profile",

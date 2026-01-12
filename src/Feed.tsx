@@ -1,7 +1,7 @@
 import { AppNavbar } from "@/components/app-navbar";
 import { Outlet } from "react-router-dom";
 
-export default function App() {
+export default function Feed() {
   return (
     <main>
       <AppNavbar />
