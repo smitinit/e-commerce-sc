@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -9,41 +9,50 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export function ShoppingCart() {
+  const [quantity, setQuantity] = useState(1);
+
+  const increase = () => setQuantity((q) => q + 1);
+  const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
+
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">Cart</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Your Cart</DialogTitle>
-            <DialogDescription>
-              Review your selected items before checkout.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Username</Label>
-              <Input id="username-1" name="username" defaultValue="@peduarte" />
-            </div>
+      <DialogTrigger asChild>
+        <Button variant="outline">Cart</Button>
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-[400px]">
+        <DialogHeader>
+          <DialogTitle>Your Cart</DialogTitle>
+          <DialogDescription>
+            Review your selected items before checkout.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="flex items-center justify-between p-3">
+          <div>
+            <p className="font-medium">Dummy Product</p>
+            <p className="text-sm text-muted-foreground">
+              Quantity: {quantity}
+            </p>
           </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="icon-sm" onClick={decrease}>
+              -
+            </Button>
+            <span className="w-6 text-center">{quantity}</span>
+            <Button variant="outline" size="icon-sm" onClick={increase}>
+              +
+            </Button>
+          </div>
+        </div>
+
+        <DialogFooter className="flex gap-2">
+          <Button onClick={() => {}}>Checkout</Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }
