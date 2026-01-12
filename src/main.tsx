@@ -5,12 +5,13 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
 
 import AppRoot from "./components/AppRoot.tsx";
-import Feed from "./Feed.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import App from "./App.tsx";
 
 import { Login } from "./components/Login.tsx";
 import { Register } from "./components/Register.tsx";
 import { UserProfile } from "./components/UserProfile.tsx";
+import { ProductsDisplay } from "./components/ProductsDisplay.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -29,11 +30,15 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/",
-            element: <Feed />,
+            element: <App />,
             children: [
               {
                 path: "profile",
                 element: <UserProfile />,
+              },
+              {
+                path: "products",
+                element: <ProductsDisplay />,
               },
             ],
           },
