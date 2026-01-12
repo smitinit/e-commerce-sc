@@ -53,6 +53,26 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setUser({ ...existingUser, isLoggedIn: true });
   };
 
+  const edit = async (username: string, email: string, token: string) => {
+    const stored = localStorage.getItem("user");
+    if (!stored) {
+      throw new Error("No user found to update.");
+    }
+
+    const existingUser: UserCredentials = JSON.parse(stored);
+
+    await new Promise((res) => setTimeout(res, 2000));
+
+    const updatedUser: UserCredentials = {
+      ...existingUser,
+      username,
+      email,
+      token,
+    };
+
+    setUser(updatedUser);
+  };
+
   const logout = () => {
     if (user) {
       setUser({ ...user, isLoggedIn: false });
@@ -60,7 +80,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, register }}>
+    <UserContext.Provider value={{ user, login, logout, register, edit }}>
       {children}
     </UserContext.Provider>
   );

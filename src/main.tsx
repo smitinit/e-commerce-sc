@@ -4,12 +4,13 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 import "./index.css";
 
+import AppRoot from "./components/AppRoot.tsx";
 import App from "./App.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 import { Login } from "./components/Login.tsx";
-import { AppRoot } from "./components/AppRoot.tsx";
 import { Register } from "./components/Register.tsx";
+import { UserProfile } from "./components/UserProfile.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -27,8 +28,14 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            index: true,
+            path: "/",
             element: <App />,
+            children: [
+              {
+                path: "profile",
+                element: <UserProfile />,
+              },
+            ],
           },
         ],
       },

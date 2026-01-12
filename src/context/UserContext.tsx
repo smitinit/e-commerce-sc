@@ -5,6 +5,7 @@ export interface UserContextType {
   user: UserCredentials | null;
   register: (username: string, email: string, token: string) => void;
   login: (email: string, token: string) => void;
+  edit: (username: string, email: string, token: string) => void;
   logout: () => void;
 }
 
