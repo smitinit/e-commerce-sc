@@ -153,7 +153,7 @@ export function ProductsDisplay() {
 
                     <Button
                       variant={"default"}
-                      disabled={isAlreadyExist}
+                      // disabled={isAlreadyExist} removed as per the request
                       onClick={() =>
                         dispatch(
                           cartActions.addItem({
