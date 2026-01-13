@@ -157,6 +157,16 @@ export function ProductsDisplay() {
               </div>
             ))}
           </RadioGroup>
+
+          {/* small metrics */}
+          <div className="mt-6">
+            <Badge className="text-xs ">metrics</Badge>
+            <Label className="text-lg ">
+              Page {currentPage} of {totalPage}
+              <br />
+              {selectedCategory}({filteredProducts.length})
+            </Label>
+          </div>
         </aside>
 
         {/* rendering of products */}
@@ -166,7 +176,7 @@ export function ProductsDisplay() {
               paginatedProducts.map((product) => {
                 // const isAlreadyExist = cartItems.some(
                 //   (item) => item.id === product.id
-                // );
+                // ); removed as per the request
                 return (
                   <div
                     key={product.id}
