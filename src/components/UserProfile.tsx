@@ -135,7 +135,7 @@ export function UserProfile() {
           {!isEditing ? (
             <div className="flex items-center justify-end gap-2">
               <Button asChild>
-                <Link to={"/"}>Go back to Feed</Link>
+                <Link to={"/products"}>Go back to Products Page</Link>
               </Button>
               <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
             </div>
