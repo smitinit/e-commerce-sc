@@ -18,6 +18,15 @@ import { Input } from "./ui/input";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 interface Product {
   id: string;
@@ -87,7 +96,7 @@ export function ProductsDisplay() {
 
   // pagination
 
-  const totalProductPerPage = 6;
+  const [totalProductPerPage, setTotalProductPerPage] = useState<number>(6);
 
   // present page state
   const [currentPage, setCurrentPage] = useState(1);
@@ -140,8 +149,8 @@ export function ProductsDisplay() {
       </div>
       <div className="flex flex-row">
         {/* category filter */}
-        <aside className="flex flex-col p-2 gap-4 w-[15%]">
-          <Label className="text-lg">Filter by Category</Label>
+        <aside className="flex flex-col p-2 gap-4 w-[15%] mt-10">
+          <Badge className="text-xs">Filter by Category</Badge>
           <RadioGroup
             value={selectedCategory}
             onValueChange={setSelectedCategory}
@@ -157,7 +166,6 @@ export function ProductsDisplay() {
               </div>
             ))}
           </RadioGroup>
-
           {/* small metrics */}
           <div className="mt-6">
             <Badge className="text-xs ">metrics</Badge>
@@ -166,6 +174,28 @@ export function ProductsDisplay() {
               <br />
               {selectedCategory}({filteredProducts.length})
             </Label>
+          </div>
+
+          <div className="mt-6">
+            <Badge className="text-xs my-2">product per page</Badge>
+            <Select
+              defaultValue="6"
+              onValueChange={(value) => setTotalProductPerPage(Number(value))}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Product per page" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Total Product Per Page</SelectLabel>
+                  <SelectItem value="6">6</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="15">15</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </aside>
 
