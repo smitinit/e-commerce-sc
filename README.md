@@ -1,1 +1,1 @@
-# E-Commerce Website
+# Mini Shopping Web Application
