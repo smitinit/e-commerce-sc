@@ -5,6 +5,7 @@ import { ShoppingCart } from "./ShoppingCart";
 import { UserMenu } from "./UserMenu";
 
 export function AppNavbar() {
+  // get the user
   const { user } = useUser();
 
   return (
@@ -15,7 +16,7 @@ export function AppNavbar() {
           Welcome back. Continue your shopping.
         </h1>
 
-        <div className=" flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <ShoppingCart />
           <UserMenu />
           <ThemeToggle />

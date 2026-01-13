@@ -15,6 +15,7 @@ import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+// validate email function with the help of regex
 function validateEmail(email: string) {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   return emailRegex.test(email);
@@ -22,8 +23,11 @@ function validateEmail(email: string) {
 
 export function Register() {
   const navigate = useNavigate();
+
+  // get both register and user
   const { register, user } = useUser();
 
+  // initial state
   const [credentials, setCredentials] = useState({
     username: "",
     email: "",
@@ -35,6 +39,7 @@ export function Register() {
   const [errors, setErrors] = useState<string[]>([]);
 
   const handleRegister = async () => {
+    // basic validatoin
     const validationErrors: string[] = [];
 
     if (!credentials.username.trim()) {
@@ -63,6 +68,7 @@ export function Register() {
 
     try {
       setIsLoading(true);
+      // call the register function
       await register(
         credentials.username,
         credentials.email,

@@ -47,12 +47,14 @@ export function ShoppingCart() {
         </DialogHeader>
 
         <div className="space-y-4 max-h-[50vh] overflow-y-auto">
+          {/* empty state */}
           {cartItems.length === 0 && (
             <p className="text-sm text-muted-foreground text-center">
               Your cart is empty.
             </p>
           )}
 
+          {/* render cart items */}
           {cartItems.map((item) => (
             <div
               key={item.id}
@@ -66,6 +68,7 @@ export function ShoppingCart() {
               </div>
 
               <div className="flex items-center gap-2">
+                {/* decrease item button */}
                 <Button
                   variant="secondary"
                   size="icon-sm"
@@ -76,8 +79,10 @@ export function ShoppingCart() {
                   <Minus className="h-4 w-4" />
                 </Button>
 
+                {/* show item quantity */}
                 <span className="w-6 text-center">{item.quantity}</span>
 
+                {/* increase item button */}
                 <Button
                   variant="secondary"
                   size="icon-sm"
@@ -94,6 +99,7 @@ export function ShoppingCart() {
                   <Plus className="h-4 w-4" />
                 </Button>
 
+                {/* remove item button */}
                 <Button
                   variant="destructive"
                   size="icon-sm"
@@ -106,6 +112,7 @@ export function ShoppingCart() {
           ))}
         </div>
 
+        {/* amount section  */}
         {cartItems.length > 0 && (
           <div className="border-t pt-4 space-y-1 text-sm">
             <div className="flex justify-between">
@@ -123,6 +130,7 @@ export function ShoppingCart() {
           </div>
         )}
 
+        {/* dummy checkout button */}
         <DialogFooter>
           <Button
             disabled={cartItems.length === 0}

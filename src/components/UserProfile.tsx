@@ -7,25 +7,31 @@ import { useUser } from "@/hooks/use-user";
 import { Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// validate email function with the help of regex
 function validateEmail(email: string) {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   return emailRegex.test(email);
 }
 
 export function UserProfile() {
+  // get both user object and edit function
   const { user, edit } = useUser();
 
+  // initial state
   const [credentials, setFormData] = useState({
     username: user!.username,
     email: user!.email,
     password: user!.token,
   });
+
+  // editing state
   const [isEditing, setIsEditing] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
   const handleSave = async () => {
+    // basic validation
     const validationErrors: string[] = [];
 
     if (!credentials.username.trim()) {
@@ -51,6 +57,7 @@ export function UserProfile() {
 
     try {
       setIsLoading(true);
+      // if everything is correct then call the edit function
       await edit(credentials.username, credentials.email, credentials.password);
       setIsEditing(false);
     } catch (error) {
@@ -62,6 +69,7 @@ export function UserProfile() {
     }
   };
 
+  // reset all
   const handleCancel = () => {
     setFormData({
       username: user!.username,

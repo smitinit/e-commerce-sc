@@ -41,6 +41,8 @@ export function ProductsDisplay() {
 
   const [filterInputValue, setFilterInputValue] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // fetch all products from api
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -64,8 +66,10 @@ export function ProductsDisplay() {
     fetchProducts();
   }, []);
 
+  // get all different category from products
   const allCategories = ["all", ...new Set(products.map((p) => p.category))];
 
+  // filter the products
   const filteredProducts = products.filter((product) => {
     // filter by search text
     if (!product.title.toLowerCase().includes(filterInputValue.toLowerCase())) {
@@ -90,6 +94,7 @@ export function ProductsDisplay() {
 
   return (
     <main className="flex flex-col">
+      {/* search bar */}
       <Input
         type="text"
         placeholder="Search any products..."
@@ -97,6 +102,7 @@ export function ProductsDisplay() {
         onChange={(e) => setFilterInputValue(e.target.value)}
       />
       <div className="flex flex-row">
+        {/* category filter */}
         <aside className="flex flex-col p-4 gap-4 w-[15%]">
           <h2>Filter by category</h2>
           <RadioGroup
@@ -112,6 +118,7 @@ export function ProductsDisplay() {
           </RadioGroup>
         </aside>
 
+        {/* rendering of products */}
         {!isLoading ? (
           <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
             {filteredProducts.map((product) => {
@@ -163,6 +170,7 @@ export function ProductsDisplay() {
             })}
           </div>
         ) : (
+          // initial loading indicator
           <div className="h-screen flex justify-center items-center w-full">
             <p className="flex gap-2 items-center">
               <Loader className="h-4 w-4 animate-spin text-primary" />

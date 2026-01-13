@@ -17,6 +17,8 @@ export interface ActionPayload {
 interface CartState {
   items: CartItem[];
 }
+
+// root state of the cart
 const initialState: CartState = {
   items: [],
 };

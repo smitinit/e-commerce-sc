@@ -7,6 +7,7 @@ import store from "./store/cart";
 export default function App() {
   const navigate = useNavigate();
 
+  // permenant redirect to /products
   useEffect(() => {
     navigate("products", { replace: true });
   }, [navigate]);

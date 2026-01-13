@@ -27,11 +27,13 @@ import { useState } from "react";
 export function UserMenu() {
   const navigate = useNavigate();
 
+  // get logout function
   const { logout } = useUser();
   const [showLogOutDialog, setShowLogOutDialog] = useState(false);
 
   function handleLogOut() {
     logout();
+    // navigate to /login
     navigate("/login", { replace: true });
   }
   return (
