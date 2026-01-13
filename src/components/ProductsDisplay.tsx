@@ -84,6 +84,23 @@ export function ProductsDisplay() {
     return true;
   });
 
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalProductPerPage = 6;
+  const totalPage = Math.ceil(filteredProducts.length / totalProductPerPage);
+
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * totalProductPerPage,
+    (currentPage - 1) * totalProductPerPage + totalProductPerPage
+  );
+
+  function handlePaginationNext() {
+    setCurrentPage(currentPage + 1 > totalPage ? totalPage : currentPage + 1);
+  }
+  function handlePaginationPrevious() {
+    setCurrentPage(currentPage - 1 === 0 ? 1 : currentPage - 1);
+  }
+
   // if error show error
   if (error)
     return (
@@ -94,6 +111,20 @@ export function ProductsDisplay() {
 
   return (
     <main className="flex flex-col">
+      <pre className="p-10 flex gap-2 flex-col  items-center">
+        <h1>Logic implementation testing</h1>
+        <Button onClick={handlePaginationNext}>next</Button>
+        <br />
+        <Button onClick={handlePaginationPrevious}>previous</Button>
+        <br />
+        total product items: {filteredProducts.length}
+        <br />
+        current page: {currentPage}
+        <br />
+        total page will be: {totalPage}
+        <br />
+        {paginatedProducts.map((product) => product.title + "\n")}
+      </pre>
       {/* search bar */}
       <div className="flex flex-row items-center px-2 my-2 ">
         <Label className="w-[15%] text-lg">
