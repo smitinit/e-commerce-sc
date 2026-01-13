@@ -85,21 +85,34 @@ export function ProductsDisplay() {
   });
 
   // pagination
-  const [currentPage, setCurrentPage] = useState(1);
+
   const totalProductPerPage = 6;
+
+  // present page state
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // find the total page according to filter data and total product per page constant
   const totalPage = Math.ceil(filteredProducts.length / totalProductPerPage);
 
+  // apply pagination
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * totalProductPerPage,
     (currentPage - 1) * totalProductPerPage + totalProductPerPage
   );
 
+  // next page
   function handlePaginationNext() {
     setCurrentPage(currentPage + 1 > totalPage ? totalPage : currentPage + 1);
   }
+  // previous page
   function handlePaginationPrevious() {
     setCurrentPage(currentPage - 1 === 0 ? 1 : currentPage - 1);
   }
+
+  // reset the page to 1 if search or filter is applied
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, filterInputValue]);
 
   // if error show error
   if (error)
@@ -111,20 +124,6 @@ export function ProductsDisplay() {
 
   return (
     <main className="flex flex-col">
-      <pre className="p-10 flex gap-2 flex-col  items-center">
-        <h1>Logic implementation testing</h1>
-        <Button onClick={handlePaginationNext}>next</Button>
-        <br />
-        <Button onClick={handlePaginationPrevious}>previous</Button>
-        <br />
-        total product items: {filteredProducts.length}
-        <br />
-        current page: {currentPage}
-        <br />
-        total page will be: {totalPage}
-        <br />
-        {paginatedProducts.map((product) => product.title + "\n")}
-      </pre>
       {/* search bar */}
       <div className="flex flex-row items-center px-2 my-2 ">
         <Label className="w-[15%] text-lg">
@@ -147,8 +146,12 @@ export function ProductsDisplay() {
             onValueChange={setSelectedCategory}
           >
             {allCategories.map((filter, i) => (
-              <div className="flex items-center gap-3" key={filter}>
-                <RadioGroupItem value={filter} id={"filter" + i} />
+              <div className="flex items-center gap-3 " key={filter}>
+                <RadioGroupItem
+                  value={filter}
+                  id={"filter" + i}
+                  className="cursor-pointer"
+                />
                 <Label htmlFor={"filter" + i}>{filter}</Label>
               </div>
             ))}
@@ -159,7 +162,7 @@ export function ProductsDisplay() {
         {!isLoading ? (
           <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2 my-4 h-[calc(100vh)] overflow-auto">
             {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => {
+              paginatedProducts.map((product) => {
                 const isAlreadyExist = cartItems.some(
                   (item) => item.id === product.id
                 );
@@ -219,6 +222,36 @@ export function ProductsDisplay() {
             </p>
           </div>
         )}
+      </div>
+      <div className="sticky bottom-2 w-full flex justify-end items-center ">
+        <div className="p-4 rounded bg-green-500 flex gap-2 ">
+          <Button
+            size={"sm"}
+            onClick={handlePaginationPrevious}
+            type="button"
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          {Array.from({ length: totalPage }).map((_, i) => (
+            <Button
+              size={"sm"}
+              variant={i + 1 === currentPage ? "default" : "outline"}
+              onClick={() => setCurrentPage(i + 1)}
+              key={i}
+            >
+              {i + 1}
+            </Button>
+          ))}
+          <Button
+            size={"sm"}
+            onClick={handlePaginationNext}
+            type="button"
+            disabled={currentPage === totalPage}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </main>
   );
