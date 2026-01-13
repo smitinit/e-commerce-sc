@@ -15,16 +15,20 @@ import {
 
 import { Minus, Plus, Trash, ShoppingCart as CartIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { toast } from "sonner";
 import { useState } from "react";
 
 export function ShoppingCart() {
   const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector((state: RootState) => state.cart.items);
-
+  const [open, setOpen] = useState(false);
   // dummy checkout function
-  const [checkout, setCheckout] = useState(false);
   function handleCheckout() {
-    setCheckout((pV) => !pV);
+    setOpen(false);
+    toast(<p className="text-primary">Checkout Completed!</p>, {
+      description: "The Cart has been cleared.",
+    });
+    dispatch(cartActions.emptyCart());
   }
 
   // count total
@@ -38,7 +42,7 @@ export function ShoppingCart() {
   const total = subtotal + tax;
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <CartIcon className="h-4 w-4" />
@@ -142,10 +146,10 @@ export function ShoppingCart() {
         <DialogFooter>
           <Button
             disabled={cartItems.length === 0}
-            variant={checkout ? "outline" : "default"}
+            variant="default"
             onClick={handleCheckout}
           >
-            {checkout ? "Checkout Completed" : "Checkout"}
+            Checkout
           </Button>
         </DialogFooter>
       </DialogContent>

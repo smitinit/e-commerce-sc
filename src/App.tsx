@@ -21,7 +21,7 @@ export default function App() {
           <Outlet />
         </div>
         <Toaster
-          position="bottom-center"
+          position="bottom-left"
           richColors
           theme="system"
           duration={3000}
