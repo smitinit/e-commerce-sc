@@ -135,7 +135,7 @@ export function ProductsDisplay() {
   return (
     <main className="flex flex-col">
       {/* search bar */}
-      <div className="flex flex-row items-center px-2 my-2 ">
+      <div className="flex flex-col md:flex-row lg:flex-row items-center px-2 my-2 ">
         <Label className="w-[15%] text-lg">
           Search Products <ArrowBigRight className="h-4 w-4" />
         </Label>
@@ -147,7 +147,7 @@ export function ProductsDisplay() {
           onChange={(e) => setFilterInputValue(e.target.value)}
         />
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-col md:flex-row lg:flex-row">
         {/* category filter */}
         <aside className="flex flex-col p-2 gap-4 w-[15%] mt-10">
           <Badge className="text-xs">Filter by Category</Badge>
@@ -182,7 +182,7 @@ export function ProductsDisplay() {
               defaultValue="6"
               onValueChange={(value) => setTotalProductPerPage(Number(value))}
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger>
                 <SelectValue placeholder="Product per page" />
               </SelectTrigger>
               <SelectContent>
