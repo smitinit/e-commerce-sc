@@ -127,53 +127,57 @@ export function ProductsDisplay() {
         {/* rendering of products */}
         {!isLoading ? (
           <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2 my-4 h-[calc(100vh)] overflow-auto">
-            {filteredProducts.map((product) => {
-              const isAlreadyExist = cartItems.some(
-                (item) => item.id === product.id
-              );
-              return (
-                <div
-                  key={product.id}
-                  className="border rounded-md p-3 flex flex-col gap-2 h-fit"
-                >
-                  <img
-                    src={product.thumbnail}
-                    alt={product.title}
-                    className="h-40 object-cover rounded"
-                  />
-
-                  <h3 className="font-medium">{product.title}</h3>
-
-                  <p className="text-sm text-muted-foreground">
-                    Category: <Badge>{product.category}</Badge>
-                  </p>
-
-                  <p className="font-semibold italic">₹{product.price}</p>
-
-                  <Button
-                    variant={"default"}
-                    disabled={isAlreadyExist}
-                    onClick={() =>
-                      dispatch(
-                        cartActions.addItem({
-                          id: product.id,
-                          title: product.title,
-                          price: product.price,
-                        })
-                      )
-                    }
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => {
+                const isAlreadyExist = cartItems.some(
+                  (item) => item.id === product.id
+                );
+                return (
+                  <div
+                    key={product.id}
+                    className="border rounded-md p-3 flex flex-col gap-2 h-fit"
                   >
-                    {isAlreadyExist ? (
-                      <>
-                        Added to Cart <CircleCheck className="h-4 w-4" />
-                      </>
-                    ) : (
-                      "Add to Cart"
-                    )}
-                  </Button>
-                </div>
-              );
-            })}
+                    <img
+                      src={product.thumbnail}
+                      alt={product.title}
+                      className="h-40 object-cover rounded"
+                    />
+
+                    <h3 className="font-medium">{product.title}</h3>
+
+                    <p className="text-sm text-muted-foreground">
+                      Category: <Badge>{product.category}</Badge>
+                    </p>
+
+                    <p className="font-semibold italic">₹{product.price}</p>
+
+                    <Button
+                      variant={"default"}
+                      disabled={isAlreadyExist}
+                      onClick={() =>
+                        dispatch(
+                          cartActions.addItem({
+                            id: product.id,
+                            title: product.title,
+                            price: product.price,
+                          })
+                        )
+                      }
+                    >
+                      {isAlreadyExist ? (
+                        <>
+                          Added to Cart <CircleCheck className="h-4 w-4" />
+                        </>
+                      ) : (
+                        "Add to Cart"
+                      )}
+                    </Button>
+                  </div>
+                );
+              })
+            ) : (
+              <p>No Product found, try resetting your filters!</p>
+            )}
           </div>
         ) : (
           // initial loading indicator
