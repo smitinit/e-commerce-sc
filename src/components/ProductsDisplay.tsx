@@ -122,7 +122,7 @@ export function ProductsDisplay() {
   // reset the page to 1 if search or filter is applied
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, filterInputValue]);
+  }, [selectedCategory, filterInputValue, totalProductPerPage]);
 
   // if error show error
   if (error)
