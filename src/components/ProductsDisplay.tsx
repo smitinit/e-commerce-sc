@@ -110,7 +110,7 @@ export function ProductsDisplay() {
       <div className="flex flex-row">
         {/* category filter */}
         <aside className="flex flex-col p-2 gap-4 w-[15%]">
-          <Label className="text-lg">Filter Category</Label>
+          <Label className="text-lg">Filter by Category</Label>
           <RadioGroup
             value={selectedCategory}
             onValueChange={setSelectedCategory}

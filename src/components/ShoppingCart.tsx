@@ -15,10 +15,17 @@ import {
 
 import { Minus, Plus, Trash, ShoppingCart as CartIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { useState } from "react";
 
 export function ShoppingCart() {
   const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector((state: RootState) => state.cart.items);
+
+  // dummy checkout function
+  const [checkout, setCheckout] = useState(false);
+  function handleCheckout() {
+    setCheckout((pV) => !pV);
+  }
 
   // count total
   const subtotal = cartItems.reduce(
@@ -135,9 +142,10 @@ export function ShoppingCart() {
         <DialogFooter>
           <Button
             disabled={cartItems.length === 0}
-            onClick={() => console.log("Checkout")}
+            variant={checkout ? "outline" : "default"}
+            onClick={handleCheckout}
           >
-            Checkout
+            {checkout ? "Checkout Completed" : "Checkout"}
           </Button>
         </DialogFooter>
       </DialogContent>
