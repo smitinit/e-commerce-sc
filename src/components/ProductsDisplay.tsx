@@ -201,7 +201,7 @@ export function ProductsDisplay() {
 
         {/* rendering of products */}
         {!isLoading ? (
-          <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2 my-4 h-[calc(100vh)] overflow-auto">
+          <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2 my-4 ">
             {filteredProducts.length > 0 ? (
               paginatedProducts.map((product) => {
                 // const isAlreadyExist = cartItems.some(
