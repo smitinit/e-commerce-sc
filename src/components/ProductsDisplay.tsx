@@ -8,15 +8,16 @@
 //          - Search bar (filter by title) done
 //          - Optional category filter done
 
-import { AppDispatch, cartActions, RootState } from "@/store/cart";
+import { AppDispatch, cartActions } from "@/store/cart";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { ArrowBigRight, CircleCheck, Loader } from "lucide-react";
+import { ArrowBigRight, Loader, StepBack, StepForward } from "lucide-react";
 import { Input } from "./ui/input";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
+import { toast } from "sonner";
 
 interface Product {
   id: string;
@@ -32,7 +33,7 @@ interface ProductsResponse {
 
 export function ProductsDisplay() {
   const dispatch = useDispatch<AppDispatch>();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  // const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -163,9 +164,9 @@ export function ProductsDisplay() {
           <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2 my-4 h-[calc(100vh)] overflow-auto">
             {filteredProducts.length > 0 ? (
               paginatedProducts.map((product) => {
-                const isAlreadyExist = cartItems.some(
-                  (item) => item.id === product.id
-                );
+                // const isAlreadyExist = cartItems.some(
+                //   (item) => item.id === product.id
+                // );
                 return (
                   <div
                     key={product.id}
@@ -188,23 +189,48 @@ export function ProductsDisplay() {
                     <Button
                       variant={"default"}
                       // disabled={isAlreadyExist} removed as per the request
-                      onClick={() =>
+                      onClick={() => {
+                        toast(
+                          <p>
+                            <span className="text-primary font-bold">
+                              "{product.title}"{" "}
+                            </span>
+                            has been added to cart.
+                          </p>,
+                          {
+                            description: (
+                              <span className="font-semibold">
+                                Price: <Badge>₹ {product.price}</Badge>
+                              </span>
+                            ),
+                            action: {
+                              label: <span>Undo</span>,
+                              onClick: () => {
+                                toast(
+                                  <p>
+                                    <span className="text-primary font-bold">
+                                      "{product.title}"{" "}
+                                    </span>
+                                    has been removed from the cart.
+                                  </p>
+                                );
+                                dispatch(
+                                  cartActions.decreaseItemQuantity(product.id)
+                                );
+                              },
+                            },
+                          }
+                        );
                         dispatch(
                           cartActions.addItem({
                             id: product.id,
                             title: product.title,
                             price: product.price,
                           })
-                        )
-                      }
+                        );
+                      }}
                     >
-                      {isAlreadyExist ? (
-                        <>
-                          Added to Cart <CircleCheck className="h-4 w-4" />
-                        </>
-                      ) : (
-                        "Add to Cart"
-                      )}
+                      Add to Cart
                     </Button>
                   </div>
                 );
@@ -224,14 +250,14 @@ export function ProductsDisplay() {
         )}
       </div>
       <div className="sticky bottom-2 w-full flex justify-end items-center ">
-        <div className="p-4 rounded bg-green-500 flex gap-2 ">
+        <div className="p-4 rounded border shadow-2xl bg-background flex gap-2">
           <Button
             size={"sm"}
             onClick={handlePaginationPrevious}
             type="button"
             disabled={currentPage === 1}
           >
-            Previous
+            <StepBack className="h-4 w-4 " />
           </Button>
           {Array.from({ length: totalPage }).map((_, i) => (
             <Button
@@ -249,7 +275,7 @@ export function ProductsDisplay() {
             type="button"
             disabled={currentPage === totalPage}
           >
-            Next
+            <StepForward className="h-4 w-4 " />
           </Button>
         </div>
       </div>
