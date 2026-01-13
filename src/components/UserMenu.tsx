@@ -38,7 +38,7 @@ export function UserMenu() {
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" aria-label="Open menu" size="icon">
+          <Button aria-label="Open menu" size="icon">
             <User2 className="h-4 w-4 " />
           </Button>
         </DropdownMenuTrigger>

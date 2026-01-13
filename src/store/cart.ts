@@ -18,14 +18,7 @@ interface CartState {
   items: CartItem[];
 }
 const initialState: CartState = {
-  items: [
-    {
-      id: "1",
-      title: "Sample Product",
-      price: 100,
-      quantity: 2,
-    },
-  ],
+  items: [],
 };
 
 const cartSlice = createSlice({
@@ -69,11 +62,6 @@ const cartSlice = createSlice({
         state.items = state.items.filter((item) => item.id !== action.payload);
       }
     },
-
-    // clear the entire cart
-    clearCart(state) {
-      state.items = [];
-    },
   },
 });
 
@@ -85,8 +73,10 @@ const store = configureStore({
 });
 
 export const cartActions = cartSlice.actions;
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
 export default store;
 
 // legacy old way

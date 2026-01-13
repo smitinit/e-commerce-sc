@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Minus, Plus, Trash } from "lucide-react";
+import { Minus, Plus, Trash, ShoppingCart as CartIcon } from "lucide-react";
 
 export function ShoppingCart() {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +32,10 @@ export function ShoppingCart() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Cart</Button>
+        <Button>
+          <CartIcon className="h-4 w-4" />
+          Cart{cartItems.length > 0 && " (" + cartItems.length + ")"}
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[420px]">
@@ -43,7 +46,7 @@ export function ShoppingCart() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 max-h-[50vh] overflow-y-auto">
           {cartItems.length === 0 && (
             <p className="text-sm text-muted-foreground text-center">
               Your cart is empty.
