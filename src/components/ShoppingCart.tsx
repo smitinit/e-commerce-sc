@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Minus, Plus, Trash, ShoppingCart as CartIcon } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 export function ShoppingCart() {
   const dispatch = useDispatch<AppDispatch>();
@@ -117,15 +118,15 @@ export function ShoppingCart() {
           <div className="border-t pt-4 space-y-1 text-sm">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>₹{subtotal.toFixed(2)}</span>
+              <Badge variant={"secondary"}>₹ {subtotal.toFixed(2)}</Badge>
             </div>
             <div className="flex justify-between">
               <span>Tax (18%)</span>
-              <span>₹{tax.toFixed(2)}</span>
+              <Badge variant={"secondary"}>₹ {tax.toFixed(2)}</Badge>
             </div>
             <div className="flex justify-between font-medium">
               <span>Total</span>
-              <span>₹{total.toFixed(2)}</span>
+              <Badge variant={"default"}>₹ {total.toFixed(2)}</Badge>
             </div>
           </div>
         )}

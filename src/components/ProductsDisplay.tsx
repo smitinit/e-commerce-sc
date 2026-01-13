@@ -6,14 +6,14 @@
 //          - “Add to Cart” button done
 // Includes:
 //          - Search bar (filter by title) done
-//          - Optional category filter
+//          - Optional category filter done
 
 import { AppDispatch, cartActions, RootState } from "@/store/cart";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { CircleCheck, Loader } from "lucide-react";
+import { ArrowBigRight, CircleCheck, Loader } from "lucide-react";
 import { Input } from "./ui/input";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
@@ -95,16 +95,22 @@ export function ProductsDisplay() {
   return (
     <main className="flex flex-col">
       {/* search bar */}
-      <Input
-        type="text"
-        placeholder="Search any products..."
-        value={filterInputValue}
-        onChange={(e) => setFilterInputValue(e.target.value)}
-      />
+      <div className="flex flex-row items-center px-2 my-2 ">
+        <Label className="w-[15%] text-lg">
+          Search Products <ArrowBigRight className="h-4 w-4" />
+        </Label>
+        <Input
+          className="flex-1"
+          type="text"
+          placeholder="Search any products..."
+          value={filterInputValue}
+          onChange={(e) => setFilterInputValue(e.target.value)}
+        />
+      </div>
       <div className="flex flex-row">
         {/* category filter */}
-        <aside className="flex flex-col p-4 gap-4 w-[15%]">
-          <h2>Filter by category</h2>
+        <aside className="flex flex-col p-2 gap-4 w-[15%]">
+          <Label className="text-lg">Filter Category</Label>
           <RadioGroup
             value={selectedCategory}
             onValueChange={setSelectedCategory}
@@ -120,7 +126,7 @@ export function ProductsDisplay() {
 
         {/* rendering of products */}
         {!isLoading ? (
-          <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+          <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2 my-4 h-[calc(100vh)] overflow-auto">
             {filteredProducts.map((product) => {
               const isAlreadyExist = cartItems.some(
                 (item) => item.id === product.id
@@ -128,7 +134,7 @@ export function ProductsDisplay() {
               return (
                 <div
                   key={product.id}
-                  className="border rounded-md p-3 flex flex-col gap-2"
+                  className="border rounded-md p-3 flex flex-col gap-2 h-fit"
                 >
                   <img
                     src={product.thumbnail}
